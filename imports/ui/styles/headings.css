@@ -1,0 +1,23 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: transparent;
+  text-shadow: 0 0 0px var(--main-text-color), 0 0 0px #000,
+    0 0 1px var(--main-text-color), 0 0 3px var(--main-text-color);
+  font-family: var(--main-title-font);
+  margin-top: 0;
+}
+
+h1,
+.h1 {
+  font-size: 4rem;
+}
