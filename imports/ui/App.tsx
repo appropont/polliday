@@ -43,7 +43,8 @@ export const App = () => (
       </Switch>
     </BrowserRouter>
     <div className="footer">
-      Source code available on <a href="https://github.com">Github</a>
+      Source code available on{" "}
+      <a href="https://github.com/appropont/polliday/">Github</a>
     </div>
   </div>
 );
