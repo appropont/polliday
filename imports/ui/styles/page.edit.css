@@ -1,0 +1,89 @@
+.poll-options {
+  padding: 0 4rem;
+}
+
+.poll-options summary {
+  margin-bottom: 0.5rem;
+}
+
+.dragging .option .muted {
+  opacity: 0;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.option .drag-handle {
+  opacity: 0.2;
+  position: absolute;
+  height: calc(100% - 34px);
+  left: 4px;
+  top: 14px;
+  background: var(--main-text-color);
+  width: 32px;
+  border-top-left-radius: 180px;
+  border-bottom-left-radius: 180px;
+  color: var(--main-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(0px, 4px);
+  transition: background-color 0.15s;
+}
+
+.option.draggable input {
+  padding-left: 42px;
+  z-index: 1;
+}
+
+.option.draggable .drag-handle {
+  height: calc(100% - 34px);
+  z-index: 2;
+  opacity: 1;
+  left: 3px;
+}
+
+.option input:focus + .drag-handle {
+  background: white;
+}
+
+.option .delete-button {
+  position: absolute;
+  background: var(--main-bg-color);
+  right: 0;
+  height: calc(100% - 2rem);
+  top: 1rem;
+  display: flex;
+  opacity: 0;
+  font-size: 1.3rem;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  text-shadow: 0 0 1px var(--main-text-color);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  z-index: 1;
+  padding: 0.3rem 1rem;
+  margin: 0;
+  transform: translateX(270%);
+}
+
+.option input:focus ~ .delete-button {
+  transform: translateX(60%);
+  text-shadow: 0 0 1px var(--main-text-color);
+  opacity: 1;
+  z-index: 2;
+}
+
+.forbidden-icon {
+  font-size: 15rem;
+  text-shadow: 0 0 1px var(--main-text-color);
+  color: transparent;
+  text-align: center;
+}
+
+.forbidden-title {
+  text-align: center;
+}

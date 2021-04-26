@@ -6,6 +6,10 @@ import { _ } from "meteor/underscore";
 
 import { PollsCollection } from "./polls";
 
+const configSchema = new SimpleSchema({
+  multiSelect: Boolean,
+});
+
 export const insert = new ValidatedMethod({
   name: "polls.insert",
   validate: new SimpleSchema({
@@ -16,12 +20,13 @@ export const insert = new ValidatedMethod({
       type: String,
     },
   }).validator(),
-  run({ topic, creatorId }: any) {
+  run({ topic, creatorId, config }: any) {
     return PollsCollection.insert({
       topic,
       creatorId,
       options: [],
       createdAt: new Date(),
+      config: { multiSelect: false },
     });
   },
 });
@@ -44,12 +49,19 @@ export const update = new ValidatedMethod({
     ["options.$"]: {
       type: String,
     },
+    config: configSchema,
   }).validator(),
-  run({ topic, creatorId, pollId, options }: any) {
-    // permissions check needed
-    // if(creatorId !== ) {
+  run({ topic, creatorId, pollId, options, config }: any) {
+    const poll = PollsCollection.findOne({ _id: pollId });
 
-    // }
+    if (!poll) {
+      return;
+    }
+
+    // permissions check needed
+    if (creatorId !== poll.creatorId) {
+      return;
+    }
 
     return PollsCollection.update(
       { _id: { $eq: pollId } },
@@ -58,6 +70,7 @@ export const update = new ValidatedMethod({
         creatorId,
         options,
         createdAt: new Date(),
+        config,
       }
     );
   },
@@ -83,8 +96,66 @@ export const getByMongoId = new ValidatedMethod({
   },
 });
 
+export const isOwner = new ValidatedMethod({
+  name: "polls.isOwner",
+  validate: new SimpleSchema({
+    pollId: {
+      type: String,
+    },
+    userId: {
+      type: String,
+    },
+  }).validator(),
+  run({ userId, pollId }: any) {
+    const poll = PollsCollection.findOne({
+      _id: pollId,
+    });
+
+    if (poll?.creatorId === userId) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+});
+
+export const closeVoting = new ValidatedMethod({
+  name: "polls.closeVoting",
+  validate: new SimpleSchema({
+    pollId: {
+      type: String,
+    },
+    creatorId: {
+      type: String,
+    },
+  }).validator(),
+  run({ creatorId, pollId }: any) {
+    const poll = PollsCollection.findOne({ _id: pollId });
+
+    if (!poll) {
+      return;
+    }
+
+    // permissions check needed
+    if (creatorId !== poll.creatorId) {
+      return;
+    }
+
+    return PollsCollection.update(
+      { _id: { $eq: pollId } },
+      {
+        ...poll,
+        active: false,
+      }
+    );
+  },
+});
+
 // Get list of all method names on Lists
-const LISTS_METHODS = _.pluck([insert, update, getByMongoId], "name");
+const LISTS_METHODS = _.pluck(
+  [insert, update, getByMongoId, isOwner, closeVoting],
+  "name"
+);
 
 if (Meteor.isServer) {
   // Only allow 5 list operations per connection per second

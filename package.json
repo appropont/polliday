@@ -9,18 +9,24 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "@types/react-copy-to-clipboard": "^5.0.0",
+    "clipboard": "^2.0.8",
     "lodash": "^4.17.21",
     "meteor-node-stubs": "^1.0.1",
     "nanoid": "^3.1.22",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "simpl-schema": "^1.12.0"
+    "simpl-schema": "^1.12.0",
+    "victory": "^35.5.1"
   },
   "devDependencies": {
     "@types/meteor": "^1.4.49",
     "@types/mocha": "^8.0.3",
     "@types/react": "^16.9.49",
+    "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.7",
     "@types/simpl-schema": "^1.10.4",

@@ -17,6 +17,8 @@ Meteor.publish(PublicationKeys.poll, (params) => {
         _id: 1,
         topic: 1,
         options: 1,
+        config: 1,
+        active: 1,
       },
     }
   );

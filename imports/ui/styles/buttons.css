@@ -7,16 +7,25 @@ button,
   margin: 0;
   text-decoration: none;
   display: inline-block;
+  vertical-align: middle;
 
   border: solid 4px var(--main-text-color);
   border-radius: 42px;
   box-shadow: 0 0 4px var(--main-text-color);
+  text-shadow: none;
+  font-family: var(--main-title-font);
   color: var(--main-text-color);
   padding: 1rem 2rem;
   font-size: 1.5rem;
   margin: 1rem 0;
   transition: border 0.3s, background-color 0.3s, color 0.3s;
   cursor: pointer;
+}
+
+button:disabled,
+.button:disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 button:hover,
@@ -34,4 +43,59 @@ button:active,
 .button:active {
   background: var(--main-text-color);
   color: var(--main-bg-color);
+}
+
+/* Warning State */
+button.warning,
+.button.warning {
+  border: solid 4px var(--main-warning-color);
+  box-shadow: 0 0 4px var(--main-warning-color);
+  text-shadow: none;
+  color: var(--main-warning-color);
+}
+
+button.warning:hover,
+.button.warning:hover {
+  background: var(--main-highlight-color);
+}
+
+button.warning:focus,
+.button.warning:focus {
+  border: 4px solid white;
+  outline: none;
+}
+
+button.warning:active,
+.button.warning:active {
+  background: var(--main-warning-color);
+  color: var(--main-bg-color);
+}
+
+/* Error State */
+
+button.error,
+.button.error {
+  border: solid 4px var(--main-error-color);
+  box-shadow: 0 0 4px var(--main-error-color);
+  text-shadow: none;
+  color: var(--main-error-color);
+}
+
+button.error:hover,
+.button.error:hover {
+  /* background: var(--main-highlight-color); */
+  background: rgba(255, 0, 0, 0.3);
+  color: white;
+}
+
+button.error:focus,
+.button.error:focus {
+  border: 4px solid white;
+  outline: none;
+}
+
+button.error:active,
+.button.error:active {
+  background: var(--main-error-color);
+  color: white;
 }

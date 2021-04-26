@@ -5,6 +5,7 @@ import { DDPRateLimiter } from "meteor/ddp-rate-limiter";
 import { _ } from "meteor/underscore";
 
 import { VotesCollection } from "./votes";
+import { PollsCollection } from "../polls/polls";
 
 export const getPollVote = new ValidatedMethod({
   name: "votes.getPollVote",
@@ -42,6 +43,11 @@ export const upsert = new ValidatedMethod({
   }).validator(),
   run({ voterId, pollId, selectedOptions }: any) {
     const vote = VotesCollection.findOne({ voterId });
+    const poll = PollsCollection.findOne({ _id: pollId });
+
+    if (poll?.active === false) {
+      return { error: "Poll is no longer active" };
+    }
 
     if (vote) {
       return VotesCollection.update(

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { Edit } from "./pages/Edit";
@@ -12,12 +12,18 @@ import "./styles/buttons.css";
 import "./styles/headings.css";
 import "./styles/inputs.css";
 import "./styles/lists.css";
-// import "./styles/pages/results.css";
+import "./styles/page.results.css";
+import "./styles/page.edit.css";
+import "./styles/page.vote.css";
+
+document.title = "Polliday | Polls so easy its like a vacation";
 
 export const App = () => (
-  <div>
-    <h2 className="logo">🍹DoppleStraw</h2>
+  <div className="app-container">
     <BrowserRouter>
+      <Link to="/" className="logo-link">
+        <h2 className="logo">🍹Polliday</h2>
+      </Link>
       <Switch>
         <Route path="/" exact={true}>
           <Home></Home>
@@ -36,5 +42,8 @@ export const App = () => (
         </Route>
       </Switch>
     </BrowserRouter>
+    <div className="footer">
+      Source code available on <a href="https://github.com">Github</a>
+    </div>
   </div>
 );
