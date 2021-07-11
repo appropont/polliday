@@ -132,6 +132,22 @@ export const Results = () => {
                   </button>
                 </>
               )}
+
+              {!vote && !isOwner && poll?.active !== false && (
+                <span>
+                  <Link to={`/${pollId}/vote`} className="button warning">
+                    Vote
+                  </Link>
+                </span>
+              )}
+
+              {vote && !isOwner && poll?.active !== false && (
+                <span>
+                  <Link to={`/${pollId}/vote`} className="button">
+                    Change Vote
+                  </Link>
+                </span>
+              )}
             </span>
           </h1>
 
@@ -140,71 +156,49 @@ export const Results = () => {
               <div className="status-message error">Voting has closed.</div>
             )}
 
-            {!vote && !isOwner && poll?.active !== false && (
-              <div className="status-message warning">
-                You haven't voted yet.
-                <div>
-                  <Link to={`/${pollId}/vote`} className="button warning">
-                    Vote
-                  </Link>
-                </div>
+            {aggregatedOptions?.length === 0 && (
+              <div className="no-votes-found">
+                <h2>There are no votes yet.</h2>
               </div>
             )}
 
-            {vote && !isOwner && poll?.active !== false && (
-              <div className="h3 status-message">
-                <span className="label h3">Want to change your vote?</span>
-                <div>
-                  <Link to={`/${pollId}/vote`} className="button">
-                    Vote
-                  </Link>
-                </div>
+            <div className="results">
+              <div className="bar-chart-container">
+                {aggregatedOptions.length > 0 && (
+                  <VictoryBar
+                    animate={{ duration: 2000, easing: "bounce" }}
+                    barRatio={1.5}
+                    data={
+                      aggregatedOptions?.map((option, index) => ({
+                        x: index,
+                        y: option.total,
+                      })) ?? []
+                    }
+                    height={200}
+                    sortKey="total"
+                    sortOrder="descending"
+                    labels={
+                      aggregatedOptions?.map(
+                        (option) =>
+                          option.text +
+                          " " +
+                          Math.floor((option.total / totalVotes) * 100) +
+                          "%"
+                      ) ?? []
+                    }
+                    style={{
+                      labels: { fill: "#2b2d3a" },
+                      data: {
+                        fill: ({ index }) =>
+                          colorScale[(index as number) % colorScale.length] ??
+                          colorScale[0],
+                      },
+                    }}
+                    horizontal={true}
+                    labelComponent={<VictoryLabel textAnchor="end" dx={-10} />}
+                  ></VictoryBar>
+                )}
               </div>
-            )}
-          </div>
-
-          {aggregatedOptions?.length === 0 && (
-            <div className="no-votes-found">
-              <h2>There are no votes yet.</h2>
-            </div>
-          )}
-
-          <div className="results">
-            <div className="bar-chart-container">
-              {aggregatedOptions.length > 0 && (
-                <VictoryBar
-                  animate={{ duration: 2000, easing: "bounce" }}
-                  barRatio={1.5}
-                  data={
-                    aggregatedOptions?.map((option, index) => ({
-                      x: index,
-                      y: option.total,
-                    })) ?? []
-                  }
-                  height={200}
-                  sortKey="total"
-                  sortOrder="descending"
-                  labels={
-                    aggregatedOptions?.map(
-                      (option) =>
-                        option.text +
-                        " " +
-                        Math.floor((option.total / totalVotes) * 100) +
-                        "%"
-                    ) ?? []
-                  }
-                  style={{
-                    labels: { fill: "#2b2d3a" },
-                    data: {
-                      fill: ({ index }) =>
-                        colorScale[(index as number) % colorScale.length] ??
-                        colorScale[0],
-                    },
-                  }}
-                  horizontal={true}
-                  labelComponent={<VictoryLabel textAnchor="end" dx={-10} />}
-                ></VictoryBar>
-              )}
             </div>
           </div>
         </div>

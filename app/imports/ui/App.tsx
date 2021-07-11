@@ -45,8 +45,20 @@ export const App = () => (
       </Switch>
     </BrowserRouter>
     <div className="footer">
-      Source code available on{" "}
-      <a href="https://github.com/appropont/polliday/">Github</a>
+      <div>
+        Hosting provided by{" "}
+        <a
+          href="https://server.pro/?cmgriffing"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Server.pro
+        </a>
+      </div>
+      <div>
+        Source code available on{" "}
+        <a href="https://github.com/appropont/polliday/">Github</a>
+      </div>
     </div>
   </div>
 );
