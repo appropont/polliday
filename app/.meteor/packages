@@ -23,3 +23,4 @@ mdg:validated-method
 ddp-rate-limiter@1.0.9
 underscore@1.0.10
 standard-minifier-css
+fourseven:scss

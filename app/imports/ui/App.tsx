@@ -18,6 +18,8 @@ import "./styles/page.vote.css";
 
 document.title = "Polliday | Polls so easy its like a vacation";
 
+import "./main.scss";
+
 export const App = () => (
   <div className="app-container">
     <BrowserRouter>
